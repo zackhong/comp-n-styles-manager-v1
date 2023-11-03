@@ -1,0 +1,17 @@
+{
+  "name": "component and styles manager",
+  "id": "1271769325472200177",
+  "api": "1.0.0",
+  "main": "dist/code.js",
+  "capabilities": [],
+  "enableProposedApi": false,
+  "editorType": [
+    "figma"
+  ],
+  "ui": "ui.html",
+  "networkAccess": {
+    "allowedDomains": [
+      "https://fonts.googleapis.com","https://fonts.gstatic.com", "https://rsms.me"
+    ]
+  }
+}

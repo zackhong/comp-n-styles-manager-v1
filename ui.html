@@ -1,0 +1,1094 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Roboto:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+
+
+<!--UI styling-->
+<style>
+
+  /* Design Tokens */
+  :root{
+    /* colors */
+    --color-blue-1: #2E81FF;
+    --color-blue-2: #165DC9;
+    --color-pale-1: white;
+    --color-pale-2: #e4efff;
+    --color-black-1: #1f1f1f;
+    --color-black-2: dimgray;
+    --color-black-3: #e7e7e7;
+    --color-red: #ff0000;
+    --color-highlight: rgb(46, 129, 255, 0.2);
+
+    /* Fonts */
+    --font-head: 'Montserrat', sans-serif;
+    --font-body: 'Roboto', sans-serif;
+    --font-m: 16px;
+    --font-s: 14px;
+    --font-xs: 12px;
+
+    /* Icon Sizes */
+    --icon-xl: 40px;
+    --icon-l: 32px;
+    --icon-ml: 24px;
+    --icon-m: 20px;
+    --icon-s: 16px;
+
+    /* Spacings */
+    --margin-m: 16px;
+    --margin-xs: 4px;
+    --margin-zero: 0px;
+
+    --pad-l: 16px;
+    --pad-m: 12px;
+    --pad-s: 8px;
+    --pad-xs: 4px;
+    --pad-zero: 0px;
+
+    --gap-m: 12px;
+    --gap-s: 8px;
+    --gap-xs: 4px;
+
+    /* Borders */
+    --corner-m: 4px;
+
+    /* Shadows */
+    --shadow-up: 0px -4px 8px rgba(0, 0, 0, 0.1);
+    --shadow-down: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  body{
+    margin: var(--margin-zero);
+    /* stops body from scrolling */
+    overflow: hidden;
+  }
+
+  /* paragraphs */
+  p{
+    font-family: var(--font-body); 
+    font-size: var(--font-m);
+    color: var(--color-black-1);
+    margin: var(--margin-zero);
+  }
+
+  .title{
+    /* text-transform: capitalize; */
+    text-align: center;
+    max-width: 200px;
+  }
+ 
+
+  /* Icons */
+  .icon-static{
+    color: var(--color-black-1);
+    font-size: var(--icon-s);
+  }
+
+  .icon-btn{
+    cursor: pointer;
+    color: var(--color-blue-1);
+    background-color: var(--color-pale-1);
+    font-size: var(--icon-ml);
+
+    transition: all 0.2s;
+  }
+
+  .icon-btn-disabled{
+    color: var(--color-black-2);
+    background-color: var(--color-black-3);
+  }
+
+  .icon-btn:hover{
+    color: var(--color-blue-2);
+    background-color: var(--color-pale-2);
+  }
+
+
+  /* Loading Screen */
+  .loading-cont{
+    background-color: var(--color-pale-1);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-s);
+    align-items: center;
+    justify-content: center;
+  }
+
+  .start-cont{
+    padding: var(--pad-zero);
+  }
+
+  /* loading anims */
+  .loading {
+    font-size: var(--icon-xl);
+    color: var(--color-black-1);
+    animation-name: spin;
+    animation-duration: 3000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear; 
+  }
+
+  @keyframes spin {
+      from {
+          transform:rotate(0deg);
+      }
+      to {
+          transform:rotate(360deg);
+      }
+  }
+
+
+  /* Tooltip */
+  .tooltip {
+    position: relative;
+  }
+
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    opacity: 0;
+    background-color: var(--color-black-1);
+    color: var(--color-pale-1);
+    font-family: var(--font-body); 
+    font-size: var(--font-xs);
+    border-radius: var(--corner-m);
+    padding: var(--pad-s);
+    position: absolute;
+    min-width: 80px;
+    z-index: 1;
+    top: 150%;
+    right: 0%;
+
+    transition: opacity 0.2s ease-out;
+  }
+
+  .tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    right: 10%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent var(--color-black-1) transparent;
+  }
+
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1.0;
+  }
+
+
+  /* Main Container to hold instructions, folder tabs, and main actions */
+  .main-cont{
+    z-index: 1;
+    position: sticky;
+    top: 0px;
+    padding-top: var(--pad-xs);
+    padding-left: var(--pad-m);
+    padding-right: var(--pad-m);
+    padding-bottom: var(--pad-m);
+    background-color: var(--color-pale-1);
+    box-shadow: var(--shadow-down);
+  }
+
+
+  /* Folder Tabs */
+  .tab-cont{
+    display: flex;
+    flex-direction: row;
+    border: 1px solid var(--color-blue-1);
+    border-style: hidden hidden solid hidden;
+  }
+
+  .tab{
+    cursor: pointer;
+    width: 100%;
+    font-family: var(--font-head); 
+    font-size: var(--font-m);
+    text-transform: capitalize;
+    padding: var(--pad-m);
+    border-radius: var(--corner-m) var(--corner-m) 0px 0px;
+    display: flex;
+    justify-content: center;
+    vertical-align: middle;
+
+    transition: all 0.2s ease-out
+  }
+
+  .tab-pri{
+    background-color: var(--color-blue-1);
+    color: var(--color-pale-1);
+  }
+  .tab-pri:hover{
+    background-color: var(--color-blue-2);
+  }
+
+  .tab-sec{
+    background-color: var(--color-pale-1);
+    color: var(--color-blue-1);
+  }
+  .tab-sec:hover{
+    background-color: var(--color-pale-2);
+  }
+
+
+  /* Divs for storing/organizing results */
+  .actions-cont{
+    display: flex;
+    flex-direction: row;
+    gap: var(--gap-s);
+  }
+
+  .top-nav-cont{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: var(--margin-m) ;
+  }
+
+
+  /* Custom checkbox */
+  
+  .check-cont{
+    display: flex;
+    flex-direction: row;
+    vertical-align: middle;
+    gap: var(--gap-xs);
+  }
+
+  /* make input checkbox invisible; we still want it to be "displayed" so that it can be toggled */
+  input[type="checkbox"]{
+    opacity: 0;
+    cursor: pointer;
+    /* put checkbox on top of span so that its click wont be blocked */
+    z-index: 1;
+  }
+
+  input[type="checkbox"].accord{
+    width: var(--icon-m);
+    height: var(--icon-m);
+  }
+
+  input[type="checkbox"].check{
+    width: var(--icon-m);
+    height: var(--icon-m);
+  }
+
+  /* set initial size, color of the span */
+  input[type="checkbox"] + span{
+    color: var(--color-black-1);
+  }
+
+  /*then offset span so tt it overlays on top of checkbox*/
+  input[type="checkbox"] + span.accord{
+    font-size: var(--icon-l);
+    margin-left: -34px;
+    margin-top: -4px;
+  }
+
+  input[type="checkbox"] + span.check{
+    font-size: var(--icon-ml);
+    margin-left: -30px;
+  }
+
+  /* using Google font's icon library, we display the icon by setting span's inner content */
+  input[type="checkbox"] + span.accord::after{
+    content: "expand_more";
+  }
+
+  input[type="checkbox"]:checked + span.accord::after{
+    content: "expand_less";
+  }
+
+  input[type="checkbox"] + span.check::after{
+    content: "check_box_outline_blank";
+  }
+
+  input[type="checkbox"]:checked + span.check::after{
+    content: "check_box";
+  }
+
+  .label-m{
+    font-size: var(--font-m);
+    margin-top: 2px;
+  }
+
+  .label-s{
+    font-size: var(--font-s);
+    margin-top: 4px;
+  }
+
+  .name{
+    font-size: var(--font-s);
+    margin-top: 2px;
+  }
+
+
+  .results-cont{
+    padding: var(--pad-m);
+    display: flex;
+    overflow-y: scroll;
+    /* specify that scrolling this div will not cause parent ie body to scroll as well */
+    overscroll-behavior: contain;
+    flex-direction: column;
+    /* height is set on load end so that overflow scroll will work */
+    gap: var(--gap-s);
+  }
+
+  /* containers that organize each data & their respective dropdowns */
+  .data{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    vertical-align: top;
+  }
+
+  .name-n-num-items{
+    display: flex;
+    flex-direction: column;
+    /* gap: var(--gap-xs); */
+  }
+
+  .check-name-num-items{
+    display: flex;
+    flex-direction: row;
+    gap: var(--gap-xs);
+    vertical-align: top;
+  }
+
+  .num-items{
+    font-family: var(--font-body);
+    font-size: var(--font-xs);
+    color: var(--color-black-2);
+  }
+
+  .dropdown{
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-s);
+    /* indent dropdown data from the left */
+    padding-left: var(--pad-l);
+    padding-top: var(--pad-s);
+  }
+
+  .expanded{
+    height: 100%;
+  }
+
+  /* Toggle Visbility, has to be declared last so it will override every other class*/
+  .hide{display: none;}
+
+  .highlight{background-color: var(--color-highlight);}
+
+
+  /* Error popup */
+  .error-text{
+    text-align: right;
+    color: var(--color-red);
+    font-size: var(--font-xs);
+    font-weight: 500;
+    opacity: 0;
+
+    transition: opacity 0.2s ease;
+  }
+
+  .show{
+    opacity: 1;
+  }
+
+  /* Instruction list */
+  ul{
+    list-style: disc;
+    padding-left: var(--pad-m);
+    /* border: 1px solid red; */
+  }
+
+  li{
+    font-family: var(--font-body);
+    font-size: var(--font-xs);
+    color: var(--color-black-1);
+  }
+
+</style>
+
+
+
+<!--UI layout-->
+
+<!-- Loading screen -->
+<div class="loading-cont" id="loading">
+  <div><span class="material-symbols-outlined loading">autorenew</span></div>
+  <p class="title" id="loading-text">Finding text styles...</p>
+</div>
+
+<!-- UI with results, if any -->
+<div class="start-cont hide" id="ui">
+
+  <!-- Error popup -->
+  
+
+  <div class="main-cont" id="main">
+
+    <ul>
+      <li>Click on <span class="material-symbols-outlined icon-static">search</span> to find all layers/ instances of your selected styles/ components</li>
+      <li>Click on <span class="material-symbols-outlined icon-static">zoom_in_map</span> to zoom in on selected layers/ instances (same page only)</li>
+    </ul>
+  
+    <div class="tab-cont">
+      <div class="tab tab-pri" id="tab-text">Text</div>
+      <div class="tab tab-sec" id="tab-color">Color</div>
+      <div class="tab tab-sec" id="tab-comp">Components</div>
+    </div>
+  
+    <div class="top-nav-cont">
+      <div class="check-cont"><input type="checkbox" class="check" id="select-all"/><span class="material-symbols-outlined check"></span><p class="label-m" id="select-text">Select All</p></div>
+      <div class="actions-cont">
+        <div class="tooltip">
+          <span class="material-symbols-outlined icon-btn" id="search">search</span>
+          <span class="tooltiptext">search (slow for large files)</span>
+        </div>
+        <div class="tooltip">
+          <span class="material-symbols-outlined icon-btn" id="zoom-in">zoom_in_map</span>
+          <span class="tooltiptext">zoom in on selection (layers & instances from same page only)</span>
+        </div>
+      </div>
+    </div>
+    <p class="error-text" id="error-text">this is an error message</p>
+  </div>
+  
+  
+  <div class="results-cont" id="result-text">
+  </div>
+
+  <div class="results-cont hide" id="result-color">
+  </div>
+
+  <div class="results-cont hide" id="result-comp">
+  </div>
+
+</div>
+
+
+
+<!--Programming logic-->
+<script>
+
+  let currPage;
+  let selectedTextPages = [];
+  let selectedColorPages = [];
+  let selectedCompPages = [];
+
+
+
+
+  //LOADING FUNCTIONS
+
+  //tell code.ts to start searching after it has finished loading
+  window.onload = ()=>{
+
+    currPage = "text";
+    parent.postMessage( {pluginMessage: {msgType:"start"} }, "*");
+  }
+
+  //func to prep UI when all data is loaded from Figma File
+  function loadEnd(){
+    //make ui div visible again so we can compute main-cont's height
+    document.getElementById("ui").classList.remove("hide");
+
+    //set height correctly so that user can scroll to bottom of results
+    //use offsetheight to get main-cont's height, including padding, borders & margins
+    const mainContHeight = Number (document.getElementById("main").offsetHeight);
+
+    //element.style only searches for styles added directly to the element's html tag
+    //eg <div width="800px"></div>; won't pick up properties defined in css
+    //hence we use getComputedStyle(element) instead 
+    const resultStyle = getComputedStyle(document.getElementById("result-text"));
+
+    //we further trim down the result div's height to accomodate its internal padding
+    const resultPad = parseInt(resultStyle.padding, 10);
+    const resultHeight = (800 - mainContHeight - resultPad - resultPad).toString()+"px";
+    document.getElementById("result-text").style.height = resultHeight;
+    document.getElementById("result-color").style.height = resultHeight;
+    document.getElementById("result-comp").style.height = resultHeight;
+
+    document.getElementById("loading").classList.add("hide");
+  }
+
+
+
+
+
+  //FUNCTIONS TO GENERATE FOLDERS IN UI
+
+  //handles loading of styles and comp folders
+  function loadFolder(message){
+
+    let dataDiv;
+    let dropdown;
+
+    //first, only create folder if it hsan't existed yet
+    if(document.getElementById(message.id) == null){
+
+      //construct data div with input info from message
+      dataDiv = 
+          `<div class="data" id="${message.id}">
+            <div class="header">
+
+              <div class="check-name-num-items">
+                <div class="check-cont">
+                  <input type="checkbox" class="check" data-type="${message.type}" data-parent="${message.parent}"/>
+                  <span class="material-symbols-outlined check"></span>
+                </div>
+
+                <div class="name-n-num-items">
+                  <p class="label-m">${message.name}</p>
+                  <p class="num-items"></p>
+                </div>
+                
+              </div>
+
+              <div class="check-cont"><input type="checkbox" class="accord"/><span class="material-symbols-outlined accord"></span></div>
+
+            </div>
+            <div class="dropdown hide"></div>
+          </div>`;
+
+      //then, we decide where to slot this data div into our UI based on whether we specified a parent folder for it or not
+      switch(message.parent){
+
+        case "result-text":
+          document.getElementById("result-text").insertAdjacentHTML("beforeend",dataDiv);
+        break;
+
+        case "result-color":
+          document.getElementById("result-color").insertAdjacentHTML("beforeend",dataDiv);
+        break;
+
+        case "result-comp":
+          document.getElementById("result-comp").insertAdjacentHTML("beforeend",dataDiv);
+        break;
+
+        //for other folders, we'll find the parent folder's dropdown and slot their data divs there instead
+        default:
+          dropdown = document.getElementById(message.parent).querySelector(".dropdown");
+          dropdown.insertAdjacentHTML("beforeend",dataDiv);
+        break;
+      }
+    }
+  }
+
+  //handles loading of styles and comp data at start of plugin
+  function loadData(message){
+
+    let dataDiv;
+    let dropdown;
+
+    //generate template literal of data div's html block; variables from plugin message 
+    //is wrapped in ${} to make this work
+    dataDiv = 
+      `<div class="data" id="${message.id}">
+        <div class="header">
+
+          <div class="check-name-num-items">
+            <div class="check-cont">
+              <input type="checkbox" class="check" data-type="${message.type}" data-parent="${message.parent}"/>
+              <span class="material-symbols-outlined check"></span>
+            </div>
+
+            <div class="name-n-num-items">
+              <p class="label-s">${message.name}</p>
+              <p class="num-items"></p>
+            </div>
+
+          </div>
+
+          <div class="check-cont hide"><input type="checkbox" class="accord"/><span class="material-symbols-outlined accord"></span></div>
+
+        </div>
+        <div class="dropdown hide"></div>
+      </div>`;
+
+    
+    //then, we decide where to slot this data div into our UI based on whether we specified a parent folder for it or not
+    switch(message.parent){
+
+      case "result-text":
+        document.getElementById("result-text").insertAdjacentHTML("beforeend",dataDiv);
+      break;
+
+      case "result-color":
+        document.getElementById("result-color").insertAdjacentHTML("beforeend",dataDiv);
+      break;
+
+      //for other folders, we'll find the parent folder's dropdown and slot their data divs there instead
+      //comps will have a parent page folder by default
+      default:
+        dropdown = document.getElementById(message.parent).querySelector(".dropdown");
+        dropdown.insertAdjacentHTML("beforeend",dataDiv);
+      break;
+    }
+  }
+
+
+
+
+  //FUNCTIONS FOR LOADING SEARCH RESULTS IN UI
+
+  //handles loading of search result folders
+  function loadResultFolder(message){
+
+    let dataRow;
+    let parent;
+    let accord;
+
+    //first, only create folder if it hasn't existed yet
+    if(document.getElementById(message.id) == null){
+
+      dataRow = 
+            `<div class="data" id="${message.id}">
+              <div class="header">
+
+                <div class="check-name-num-items">
+                  <div class="check-cont">
+                    <input type="checkbox" class="check"  data-type="${message.type}" data-page="${message.page}" data-parent="${message.parent}"/> 
+                    <span class="material-symbols-outlined check"></span>
+                  </div>
+
+                  <div class="name-n-num-items">
+                    <p class="label-s">${message.name}</p>
+                    <p class="num-items">${message.numItems}</p>
+                  </div>
+                  
+                </div>
+
+                <div class="check-cont"><input type="checkbox" class="accord"/><span class="material-symbols-outlined accord"></span></div>
+
+              </div>
+              <div class="dropdown hide"></div>
+            </div>`;
+
+        parent = document.getElementById(message.parent);
+        //make arrow button visible if it's hidden
+        accord = parent.querySelector(".accord").parentElement;
+        if(accord.classList.contains("hide")){accord.classList.remove("hide");}
+        //then add this datarow to folder
+        parent.querySelector(".dropdown").insertAdjacentHTML("beforeend",dataRow);
+    }
+  }
+
+  function loadResultData(message){
+
+    let dataRow;
+    let dropdown;
+
+    dataRow = 
+        `<div class="data" id="${message.id}">
+          <div class="header">
+
+            <div class="check-name-num-items">
+              <div class="check-cont">
+                <input type="checkbox" class="check"  data-type="${message.type}" data-page="${message.page}" data-parent="${message.parent}"/>
+                <span class="material-symbols-outlined check"></span>
+              </div>
+
+              <div class="name-n-num-items">
+                <p class="label-s">${message.name}</p>
+                <p class="num-items"></p>
+              </div>
+              
+            </div>
+
+            <div class="check-cont hide"><input type="checkbox" class="accord"/><span class="material-symbols-outlined accord"></span></div>
+
+          </div>
+          <div class="dropdown hide"></div>
+        </div>`;
+
+    
+    //update count for folder
+    addNumItems(message.parent);
+    //then add this datarow to folder
+    dropdown = document.getElementById(message.parent).querySelector(".dropdown");
+    dropdown.insertAdjacentHTML("beforeend",dataRow);
+  }
+
+
+
+
+  //FUNCTIONS TO UPDATE NUM OF ITEMS IN DATA DIV
+
+  //increments num of items for existing text in data div
+  function addNumItems(id){
+
+    let numItems;
+    let tokens;
+    let newCount;
+    //first get numitem field of page
+    numItems = document.getElementById(id).querySelector(".num-items");
+    //then split the inner string value into tokens; 1st token will be number while 2nd token will be descriptor
+    //ie "10 instances" -> ["10", "instances"]
+    tokens = numItems.innerHTML.split(" ");
+    //update count
+    newCount = parseInt(tokens[0])+1;
+    //then update the entire numitem field
+    numItems.innerHTML = newCount.toString()+" "+tokens[1];
+  }
+
+  //sets num of items in data div
+  function setNumItems(message){
+
+    let numItems;
+
+    numItems = document.getElementById(message.id).querySelector(".num-items");
+    numItems.innerHTML = message.numItems;
+  }
+
+
+  //handler when receiving message from code.ts
+  onmessage = (event) => {
+
+    let dataRow;
+    let textResultCont;
+    let textFolder;
+    let textFolderDropdown;
+    let compPage;
+    let compPageDropdown;
+    
+    switch(event.data.pluginMessage.type){
+
+      //update loading screen
+      case "load-search":
+        document.getElementById("loading-text").innerHTML = event.data.pluginMessage.loadText;
+      break;
+
+      case "load-color":
+        document.getElementById("loading-text").innerHTML = "Finding color styles...";
+      break;
+
+      case "load-comp":
+        document.getElementById("loading-text").innerHTML = "Finding components from "+event.data.pluginMessage.name+"...";
+      break;
+
+      case "load-end":
+        loadEnd();
+      break;
+
+
+      //generating style and comp data from first load
+      case "folder-text": case "folder-color": case "folder-comp":
+        loadFolder(event.data.pluginMessage);
+      break;
+
+      case "text": case "color": case "comp":
+        loadData(event.data.pluginMessage);
+      break;
+
+
+      //updating num-items in specified data div
+      case "set-num-items":
+        setNumItems(event.data.pluginMessage);
+      break;
+
+
+      //generating results from search function
+      case "result-page":
+        loadResultFolder(event.data.pluginMessage);
+      break;
+
+      case "result-data":
+        loadResultData(event.data.pluginMessage);
+      break;
+    }
+
+  }
+
+
+  //attach click handlers to folder tabs to toggle which results gets displayed
+  document.getElementById("tab-text").onclick = ()=>{
+    if(currPage != "text"){refreshUI("text");}
+  }
+
+  document.getElementById("tab-color").onclick = ()=>{
+    if(currPage != "color"){refreshUI("color");}
+  }
+
+  document.getElementById("tab-comp").onclick = ()=>{
+    if(currPage != "comp"){refreshUI("comp");}
+  }
+
+  function refreshUI(newPage){
+
+    let oldPageEl;
+    let oldTab;
+    let newPageEl;
+    let newTab;
+
+    //first hide previous page element by adding the "hide" class to it
+    //also, change previous selected folder tab to deselected state
+    switch(currPage){
+      case "text":
+        oldPageEl = document.getElementById("result-text");
+        oldTab = document.getElementById("tab-text");
+      break;
+
+      case "color":
+        oldPageEl = document.getElementById("result-color");
+        oldTab = document.getElementById("tab-color");
+      break; 
+
+      case "comp":    
+        oldPageEl = document.getElementById("result-comp");
+        oldTab = document.getElementById("tab-comp");
+      break;
+    }
+    if(oldPageEl != null && oldTab != null){
+      oldPageEl.classList.add("hide");
+      oldTab.classList.remove("tab-pri");
+      oldTab.classList.add("tab-sec");
+    }
+
+    //then, we find the new page element and make it visible by removing the "hide" class
+    //also, change new selected folder tab to selected state
+    switch(newPage){
+      case "text":
+        newPageEl = document.getElementById("result-text");
+        newTab = document.getElementById("tab-text");
+      break;
+
+      case "color":
+        newPageEl = document.getElementById("result-color");
+        newTab = document.getElementById("tab-color");
+      break; 
+
+      case "comp":    
+        newPageEl = document.getElementById("result-comp");
+        newTab = document.getElementById("tab-comp");
+      break;
+    }
+    if(newPageEl != null && newTab != null){
+      newPageEl.classList.remove("hide");
+      newTab.classList.remove("tab-sec");
+      newTab.classList.add("tab-pri");
+    }
+
+    //finally, we need to update the current page tracker
+    currPage = newPage;
+  }
+
+  //click handler to check which part of results user is interacting with
+  document.getElementById("result-text").addEventListener("click", checkClick);
+  document.getElementById("result-color").addEventListener("click", checkClick);
+  document.getElementById("result-comp").addEventListener("click", checkClick);
+
+  function checkClick(event){
+
+    let dropdown;
+    let checkboxes;
+    let parentCheckbox;
+    let boxCount;
+    let tickedBoxCount;
+
+    //if accordion btn is clicked
+    if(event.target.classList.contains("accord")){
+
+      //find its corresponding dropdown and toggle it accordingly
+      dropdown = event.target.closest(".data").querySelector(".dropdown");
+      
+      if(dropdown.classList.contains("hide")) {dropdown.classList.remove("hide");}
+      else {dropdown.classList.add("hide");}
+    }
+    //otherwise, if checkbox is clicked
+    else if(event.target.classList.contains("check")){
+
+      //A: update child checkboxes
+      //look for all checkboxes in its dropdown
+      dropdown = event.target.closest(".data").querySelector(".dropdown");
+      checkboxes = dropdown.querySelectorAll(".check");
+
+      //if found, toggle them based on target checkbox's current state
+      //ie if target is checked, then check all boxes in its dropdown
+      if(checkboxes.length > 0){
+        for (const box of checkboxes) {box.checked = (event.target.checked)? true: false;}
+      }
+
+      //B: update parent checkbox if it has other children aka a dropdown
+      //only do this if checkbox has parent folder with a checkbox ie not top-most folder in tab
+      if(event.target.dataset.parent == "result-text" || event.target.dataset.parent == "result-color" || event.target.dataset.parent == "result-comp") {return;}
+
+      parentCheckbox = document.getElementById(event.target.dataset.parent).querySelector(".check");
+      dropdown = document.getElementById(event.target.dataset.parent).querySelector(".dropdown");
+      // debugger;
+      boxCount = dropdown.children.length;
+      //we need to use CSS.escape() to inject variables into our query selector
+      tickedBoxCount = dropdown.querySelectorAll(`.check:checked[data-parent=${CSS.escape(event.target.dataset.parent)}]`).length;
+
+      //if all its child boxes are unchecked, then uncheck parent as well
+      if(parentCheckbox.checked && tickedBoxCount < boxCount) {parentCheckbox.checked = false;}
+      //otherwise, if all its child boxes are checked, then check parent as well
+      else if(!parentCheckbox.checked && tickedBoxCount == boxCount) {parentCheckbox.checked = true;}
+    }
+  }
+
+  //checks/unchecks all items in tab when you click on select all
+  document.getElementById("select-all").onclick = (event)=>{
+
+    let selection;
+    let selectText;
+
+    //first, select the right data we wanna toggle
+    //eg if we're at Text tab, we only want to toggle checkboxes of text styles
+    switch(currPage){
+
+      case "text":
+        selection = document.getElementById("result-text").querySelectorAll('[data-type="folder-text"], [data-type="text"]');
+      break;
+
+      case "color":
+        selection = document.getElementById("result-color").querySelectorAll('[data-type="folder-color"], [data-type="color"]');
+      break;
+
+      case "comp":
+        selection = document.getElementById("result-comp").querySelectorAll('[data-type="folder-comp"], [data-type="comp"]');
+      break;
+    }
+
+    //then, we toggle the selection of checkboxes based on whether select-all is checked or unchecked
+    for(const checkbox of selection){ checkbox.checked = (event.target.checked)? true: false;}
+
+    //finally, we update the text of the select all btn
+    selectText = document.getElementById("select-text");
+    selectText.innerHTML = (event.target.checked)? "Deselect All": "Select All";
+  }
+
+
+  //handler to check which items to search for
+  document.getElementById("search").onclick = ()=>{
+
+    let selection;
+    let selectionIDs = [];
+    let loadingText;
+    let dropdown;
+
+    //limit selection based on current page
+    switch (currPage){
+      case "text":
+        selection = document.getElementById("result-text").querySelectorAll('.check:checked[data-type="text"]');
+        loadingText = "Finding text style layers...";
+      break;
+      case "color":
+        selection = document.getElementById("result-color").querySelectorAll('.check:checked[data-type="color"]');
+        loadingText = "Finding color style layers...";
+      break;
+      case "comp":
+        selection = document.getElementById("result-comp").querySelectorAll('.check:checked[data-type="comp"]');
+        loadingText = "Finding component instances...";
+      break;
+    }
+
+    //show error message if user didn't select any styles or comps
+    if(selection.length == 0){
+
+      document.getElementById("error-text").innerHTML = "Please select a text, color, or component!";
+      document.getElementById("error-text").classList.add("show");
+    }
+    //otherwise, get their ids and send it to code.ts
+    else{
+
+      //first hide UI with loading screen
+      document.getElementById("ui").classList.add("hide");
+      document.getElementById("loading-text").innerHTML = loadingText;
+      document.getElementById("loading").classList.remove("hide");
+
+      //hide error text if it's showing
+      const errorText = document.getElementById("error-text");
+      if(errorText.classList.contains("show")){errorText.classList.remove("show");}
+
+      for(const checkbox of selection){
+        //get corresponding IDs from the ticked checkboxes
+        selectionIDs.push(checkbox.closest(".data").id);
+
+        //then empty out any results in their dropdowns if any
+        dropdown = checkbox.closest(".data").querySelector(".dropdown");
+        if(dropdown.children.length > 0) {dropdown.replaceChildren();}
+      }
+
+      parent.postMessage( {pluginMessage: {msgType:"search", dataType:currPage, selection:selectionIDs} }, "*");
+    }
+  }
+
+  //handler to check which items to zoom-in on
+  document.getElementById("zoom-in").onclick = ()=>{
+
+    let selectedPages;
+    let pageID;
+    let selection;
+    let selectionIDs = [];
+    let idTokens;
+    let loadingText;
+
+    //make selections based on current page
+    switch (currPage){
+      case "text":
+        selectedPages = document.getElementById("result-text").querySelectorAll('.check:checked[data-type="result-page"]');
+        selection = document.getElementById("result-text").querySelectorAll('.check:checked[data-type="result-data"]');
+      break;
+      case "color":
+        selectedPages = document.getElementById("result-color").querySelectorAll('.check:checked[data-type="result-page"]');
+        selection = document.getElementById("result-color").querySelectorAll('.check:checked[data-type="result-data"]');
+      break;
+      case "comp":
+        selectedPages = document.getElementById("result-comp").querySelectorAll('.check:checked[data-type="result-page"]');
+        selection = document.getElementById("result-comp").querySelectorAll('.check:checked[data-type="result-data"]');
+      break;
+    }
+
+    //show error message if user didn't select any styles or comps
+    if(selection.length == 0){
+      document.getElementById("error-text").innerHTML = "Please select a layer/ component first!";
+      document.getElementById("error-text").classList.add("show");
+    }
+    //else, show error message if more than 1 result page is ticked
+    else if(selectedPages.length > 1){
+      document.getElementById("error-text").innerHTML = "Your selections must be from the same page!";
+      document.getElementById("error-text").classList.add("show");
+    }
+    else{
+      //now, we check thru selected result data to see if we have more than 1 page
+      for(let i=0; i<selection.length; i++){
+// debugger;
+        //get page id of first result data
+        if(i==0) {pageID=selection[i].dataset.page;}
+        //once you find a result data with a different page than the first result data,
+        //show error message and stop checking
+        else{
+          if(pageID != selection[i].dataset.page) {
+            document.getElementById("error-text").innerHTML = "Your selections must be from the same page!";
+            document.getElementById("error-text").classList.add("show");
+            // console.log("page id: "+pageID+", data page: "+selection[i].dataset.page);
+            return;
+          }
+        }
+
+        //get corresponding IDs from the ticked checkboxes
+        idTokens = selection[i].closest(".data").id.split("/");
+        //data's id is written as "style-id/layer-id"; we only want the layer-id portion
+        selectionIDs.push(idTokens[1]);
+      }
+
+      //if all else goes through, we can pass the data to code ts 
+      //hide error text if it's showing
+      const errorText = document.getElementById("error-text");
+      if(errorText.classList.contains("show")){errorText.classList.remove("show");}
+
+      //tell code ts to zoom in on selection
+      parent.postMessage( {pluginMessage: {msgType:"zoom-in", selectedPage:pageID, selection:selectionIDs} }, "*");
+    }
+  }
+
+</script>
